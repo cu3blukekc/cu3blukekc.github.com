@@ -1,9 +1,10 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Примеры. Множественное геокодирование</title>
+    <title>Заправки ЛУКОЙЛ с ценной на 1 рубль дешевле на этой неделе</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <script src="//api-maps.yandex.ru/2.0/?load=package.standard&lang=ru-RU" type="text/javascript"></script>
+    <script src="javascripts/lukoil.js" type="text/javascript"></script>
     <style type="text/css">
         html, body, #map {
             width: 100%;
@@ -23,18 +24,7 @@ function init() {
         myMultiGeocoder = new MultiGeocoder({ boundedBy: myMap.getBounds() });
 
     // Геокодирование массива адресов и координат.
-    myMultiGeocoder.geocode([
-        '42 км Киевского ш.',
-  	'г.Москва, Волоколамское ш., д. 22',
-		'г.Москва, ул. Маломосковская, вл. 18',
-		'г.Москва, Люблинская улица, дом 155, корп. 3',
-		'г. Москва, ш. Энтузиастов, вл.27',
-		'г. Москва, Правобережная ул. вл. 1-А',
-		'г. Москва, просп. Мичуринский , вл. 30 А',
-		'г.Москва, ул. Автозаводская, вл. 24А',
-		'г.Москва, Варшавское шоссе, вл. 95 Г',
-		'г. Москва, ул. Профсоюзная, д. 144'
-    ])
+    myMultiGeocoder.geocode(adresses)
     .then(
         function (res) {
             myMap.geoObjects.add(res.geoObjects);
@@ -43,30 +33,24 @@ function init() {
             alert(err);
         }
     );
+    
+    myMap.geoObjects.add(
+        new ymaps.Placemark(
+            [ymaps.geolocation.latitude, ymaps.geolocation.longitude],
+            {
+                balloonContentHeader: ymaps.geolocation.country,
+                balloonContent: ymaps.geolocation.city,
+                balloonContentFooter: ymaps.geolocation.region
+            }
+        )
+    );
 }
 
-/**
- * Класс для геокодирования списка адресов или координат.
- * @see https://github.com/dimik/ymaps/blob/master/multi-geocoder.js
- * @class
- * @name MultiGeocoder
- * @param {Object} [options={}] Дефолтные опции мультигеокодера.
- */
 function MultiGeocoder(options) {
     this._options = options || {};
 }
 
-/**
- * Функция множественнеого геокодирования.
- * @function
- * @requires ymaps.util.extend
- * @see http://api.yandex.ru/maps/doc/jsapi/2.x/ref/reference/util.extend.xml
- * @requires ymaps.util.Promise
- * @see http://api.yandex.ru/maps/doc/jsapi/2.x/ref/reference/util.Promise.xml
- * @name MultiGeocoder.geocode
- * @param {Array} requests Массив строк-имен топонимов и/или геометрий точек (обратное геокодирование)
- * @returns {Object} Как и в обычном геокодере, вернем объект-обещание.
- */
+
 MultiGeocoder.prototype.geocode = function (requests, options) {
     var self = this,
         opts = ymaps.util.extend({}, self._options, options),
