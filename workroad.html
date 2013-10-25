@@ -3,7 +3,7 @@
 <html>
 
 <head>
-    <title>Примеры. Построение маршрута</title>
+    <title>Дорога до работы</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <script src="//api-maps.yandex.ru/2.0/?load=package.standard,package.route,package.traffic&lang=ru-RU" type="text/javascript"></script>
     <script src="http://yandex.st/jquery/1.8.0/jquery.min.js" type="text/javascript"></script>
@@ -60,9 +60,9 @@ function init() {
             lastPoint = points.getLength() - 1;
         // Задаем стиль метки - иконки будут красного цвета, и
         // их изображения будут растягиваться под контент.
-        points.options.set('preset', 'twirl#redStretchyIcon');
+        points.options.set('preset', 'twirl#houseIcon');
         // Задаем контент меток в начальной и конечной точках.
-        points.get(0).properties.set('iconContent', 'Точка отправления');
+        points.get(0).properties.set('iconContent');
         points.get(lastPoint).properties.set('iconContent', 'Точка прибытия');
         
         // Макет кнопки должен отображать поле data.content
