@@ -38,6 +38,7 @@
     </style>
 
 <script type="text/javascript">
+
 ymaps.ready(init);
 
 function init() {
@@ -84,9 +85,8 @@ function init() {
         console.log(route.getHumanTime());
         info = new ymaps.control.Button({
             data: {
-                content: route.getHumanJamsTime() + '<br>' +
-                         route.getHumanLength()  + '<br>' +
-                         route.getHumanTime()
+                content: '<h1>' + route.getHumanJamsTime() + ', ' + route.getHumanLength()  + '</h1>'
+                         //route.getHumanTime()
             }
         }, {
             layout: InfoLayout
