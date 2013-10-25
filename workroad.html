@@ -18,7 +18,7 @@
             width: 100px;
             height: 100px;
         }
-        .my-button {
+        #info {
             display: inline-block;
             padding: 4px 14px;
             margin-bottom: 0;
@@ -77,7 +77,7 @@ function init() {
         // Макет кнопки должен отображать поле data.content
         // и изменяться в зависимости от того, нажата кнопка или нет.
         InfoLayout = ymaps.templateLayoutFactory.createClass(
-            "<div class='my-button'>$[data.content]</div>"
+            "<div id='info'>$[data.content]</div>"
         ),
         console.log(route.getHumanJamsTime());
         console.log(route.getHumanLength());
