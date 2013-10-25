@@ -79,7 +79,9 @@ function init() {
         InfoLayout = ymaps.templateLayoutFactory.createClass(
             "<div class='my-button'>$[data.content]</div>"
         ),
-            
+        console.log(route.getHumanJamsTime());
+        console.log(route.getHumanLength());
+        console.log(route.getHumanTime());
         info = new ymaps.control.Button({
             data: {
                 content: route.getHumanJamsTime() + '<br>' +
