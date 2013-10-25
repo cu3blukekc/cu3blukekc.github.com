@@ -44,6 +44,15 @@
 
 ymaps.ready(init);
 
+function getURLParameter(name) {
+    return decodeURI(
+        (RegExp(name + '=' + '(.+?)(&|$)').exec(location.search)||[,null])[1]
+    );
+}
+
+console.log(getURLParameter('from'));
+console.log(getURLParameter('to'));
+
 function init() {
     var myMap = new ymaps.Map("map", {
             center: [55.76, 37.64],
