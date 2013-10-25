@@ -13,7 +13,10 @@
             height: 100%;
             margin: 0;
             padding: 0;
-        }   
+        }
+        #compInfo {
+            display: none;
+        }
         .smallMap {
             width: 100px;
             height: 100px;
@@ -80,9 +83,6 @@ function init() {
         InfoLayout = ymaps.templateLayoutFactory.createClass(
             "<div id='info'>$[data.content]</div>"
         ),
-        console.log(route.getHumanJamsTime());
-        console.log(route.getHumanLength());
-        console.log(route.getHumanTime());
         info = new ymaps.control.Button({
             data: {
                 content: '<h1>' + route.getHumanJamsTime() + ', ' + route.getHumanLength()  + '</h1>' +
