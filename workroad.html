@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <title>Примеры. Построение маршрута</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <script src="//api-maps.yandex.ru/2.0/?load=package.standard,package.route,package.traffic&lang=ru-RU" type="text/javascript"></script>
+    <script src="http://yandex.st/jquery/1.8.0/jquery.min.js" type="text/javascript"></script>
+    <style>       
+        .my-button {
+            display: inline-block;
+            padding: 4px 14px;
+            margin-bottom: 0;
+            
+            background-color: #f5f5f5;
+            border: 1px solid #bbbbbb;
+            border-color: #e6e6e6 #e6e6e6 #bfbfbf;
+            
+            font-size: 14px;
+            line-height: 20px;
+            font-family: Arial;
+            color: #333333;
+            
+            text-align: left;
+            vertical-align: middle;
+        }
+    </style>
+
+<script type="text/javascript">
+ymaps.ready(init);
+
+function init() {
+    var myMap = new ymaps.Map("map", {
+            center: [55.76, 37.64],
+            zoom: 12
+        });
+    
+    	
+    //myMap.controls.add('zoomControl', { left: 5, top: 5 });
+    myMap.container.fitToViewport();
+    
+    // Создадим провайдер пробок "Сейчас" с включенным слоем инфоточек.
+    var actualProvider = new ymaps.traffic.provider.Actual({}, { infoLayerShown: true });
+    // И затем добавим его на карту.
+    actualProvider.setMap(myMap);
+
+    ymaps.route([
+        'Россия, Московская область, Химки, Совхозная улица, 8',
+        'Россия, Москва, улица Пришвина, 8к2'
+    ], {
+        avoidTrafficJams: true,
+        mapStateAutoApply: true,
+    }).then(function (route) {
+        myMap.geoObjects.add(route);
+        // Зададим содержание иконок начальной и конечной точкам маршрута.
+        // С помощью метода getWayPoints() получаем массив точек маршрута.
+        // Массив транзитных точек маршрута можно получить с помощью метода getViaPoints.
+        var points = route.getWayPoints(),
+            lastPoint = points.getLength() - 1;
+        // Задаем стиль метки - иконки будут красного цвета, и
+        // их изображения будут растягиваться под контент.
+        points.options.set('preset', 'twirl#redStretchyIcon');
+        // Задаем контент меток в начальной и конечной точках.
+        points.get(0).properties.set('iconContent', 'Точка отправления');
+        points.get(lastPoint).properties.set('iconContent', 'Точка прибытия');
+        
+        // Макет кнопки должен отображать поле data.content
+        // и изменяться в зависимости от того, нажата кнопка или нет.
+        InfoLayout = ymaps.templateLayoutFactory.createClass(
+            "<div class='my-button'>$[data.content]</div>"
+        ),
+            
+        info = new ymaps.control.Button({
+            data: {
+                content: route.getHumanJamsTime() + '<br>' +
+                         route.getHumanLength()  + '<br>' +
+                         route.getHumanTime()
+            }
+        }, {
+            layout: InfoLayout
+        });
+    	myMap.controls.add(info, {
+	        left: 5,
+	        top: 5
+	    });     
+            
+	
+    }, function (error) {
+        alert('Возникла ошибка: ' + error.message);
+    });
+}
+</script>
+</head>
+
+<body>
+    <div id="map" style="width:500px; height:400px"></div>
+    <div id="list"></div>
+</body>
+
+</html>
+
+
