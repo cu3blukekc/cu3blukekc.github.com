@@ -50,9 +50,6 @@ function getURLParameter(name) {
     );
 }
 
-console.log(getURLParameter('from'));
-console.log(getURLParameter('to'));
-
 function init() {
     var myMap = new ymaps.Map("map", {
             center: [55.76, 37.64],
@@ -70,8 +67,8 @@ function init() {
     actualProvider.setMap(myMap);
 
     ymaps.route([
-        'Россия, Московская область, Химки, Совхозная улица, 8',
-        'Россия, Москва, улица Пришвина, 8к2'
+        getURLParameter('from'),
+        getURLParameter('to')
     ], {
         avoidTrafficJams: true,
         mapStateAutoApply: true,
