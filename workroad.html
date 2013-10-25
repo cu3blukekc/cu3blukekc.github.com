@@ -86,7 +86,7 @@ function init() {
         info = new ymaps.control.Button({
             data: {
                 content: '<h1>' + route.getHumanJamsTime() + ', ' + route.getHumanLength()  + '</h1>' +
-                         '<div id="compInfo">' + route.getJamsTime() + route.getLength() + '</div>'
+                         '<div id="compInfo">' + route.getJamsTime() + ' ' + route.getLength() + '</div>'
             }
         }, {
             layout: InfoLayout
