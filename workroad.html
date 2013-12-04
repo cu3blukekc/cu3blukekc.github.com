@@ -80,14 +80,17 @@ function init() {
         var points = route.getWayPoints(),
             lastPoint = points.getLength() - 1;
 
-        points.options.set('preset', 'twirl#houseIcon');
-        points.get(0).properties.set('iconContent');
-        points.get(lastPoint).properties.set('iconContent', 'Точка прибытия');
+        // points.options.set('preset', 'twirl#redStretchyIcon');
+        // points.get(0).properties.set('iconContent', 'Точка отправления');
+        // points.get(lastPoint).properties.set('iconContent', 'Точка прибытия');
+
+        points.get(0).options.set('preset', 'twirl#houseIcon');
+        points.get(lastPoint).options.set('preset', 'twirl#buildingsIcon');
         
         // Макет кнопки должен отображать поле data.content
         // и изменяться в зависимости от того, нажата кнопка или нет.
         InfoLayout = ymaps.templateLayoutFactory.createClass(
-            "<div id='info'>$[data.content]</div>"
+            "<div id='info' class='jumbotron'>$[data.content]</div>"
         ),
         info = new ymaps.control.Button({
             data: {
